@@ -1,0 +1,239 @@
+/* GLOBAL SETTINGS */
+:root {
+    --bg: #030303;
+    --accent: #00ffcc;
+    --secondary: #9d00ff;
+    --text: #ffffff;
+    --card-bg: rgba(20, 20, 20, 0.8);
+    --font-main: 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+}
+
+/* 1. INTRO ANIMATION */
+.intro-curtain {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: curtainUp 1s cubic-bezier(0.77, 0, 0.175, 1) 3s forwards;
+}
+
+.intro-text-box { text-align: center; }
+.glitch-text {
+    font-size: 4rem;
+    letter-spacing: 15px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #fff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.progress-line {
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    margin: 0 auto;
+    animation: grow 2.5s ease forwards;
+}
+
+@keyframes curtainUp { to { transform: translateY(-100%); } }
+@keyframes grow { to { width: 100%; } }
+
+/* 2. LIVE BACKGROUND & DOODLES */
+.live-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: 
+        radial-gradient(circle at 20% 30%, #1a0033 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, #001a1a 0%, transparent 40%);
+    animation: bgShift 15s infinite alternate;
+}
+
+@keyframes bgShift {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+/* Doodle Overlay using SVG Pattern */
+.doodle-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.1;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 Q 30 10 30 30 T 50 50' stroke='white' fill='none'/%3E%3Ccircle cx='80' cy='20' r='2' fill='white'/%3E%3Cpath d='M70 70 L 90 90 M 90 70 L 70 90' stroke='white'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* 3. FLOATING ELEMENTS */
+.floating-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.float-item {
+    position: absolute;
+    top: var(--t);
+    left: var(--l);
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: floating var(--d) infinite linear;
+}
+
+.joke {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    background: rgba(255,255,255,0.05);
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+@keyframes floating {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, 50px) rotate(10deg); }
+    66% { transform: translate(-20px, 100px) rotate(-10deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* 4. NAVIGATION */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 30px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
+.logo span { color: var(--accent); }
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* 5. SECTIONS CONTENT */
+section {
+    min-height: 100vh;
+    padding: 100px 10%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.content-wrapper { width: 100%; }
+
+/* About Styles */
+.hero-box { max-width: 800px; }
+.status { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; }
+h1 { font-size: 4.5rem; margin: 20px 0; line-height: 1; }
+h1 span { color: transparent; -webkit-text-stroke: 1px #fff; }
+.bio { font-size: 1.2rem; color: #ccc; margin-bottom: 30px; line-height: 1.8; }
+.meta-info { display: flex; gap: 20px; flex-wrap: wrap; }
+.meta-item { background: var(--card-bg); padding: 10px 20px; border-radius: 5px; font-size: 0.8rem; }
+
+/* Skills Styles */
+.section-heading { font-size: 3rem; margin-bottom: 50px; }
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.skill-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
+}
+.skill-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+
+.bar-group { margin-bottom: 20px; }
+.bar { height: 4px; background: #222; margin-top: 10px; border-radius: 2px; overflow: hidden; }
+.fill { height: 100%; background: var(--accent); width: 0; transition: 2s; }
+section:hover .fill { width: var(--w); }
+
+/* Interest Gallery */
+.interest-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.interest-item {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    transition: 0.4s;
+}
+.interest-item:hover { background: var(--accent); color: #000; }
+.i-icon { font-size: 3rem; margin-bottom: 15px; }
+
+/* Contact Form */
+.contact-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 50px;
+    border-radius: 30px;
+}
+form input, form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #000;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 10px;
+    outline: none;
+}
+form button {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    border: none;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Animations on Scroll Reveal */
+.reveal {
+    animation: revealUp 1s ease forwards;
+}
+
+@keyframes revealUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
